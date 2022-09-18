@@ -72,19 +72,19 @@ public class Shop : MonoBehaviour
         string improvement = "";
 
         if (_upgrade.name == "Better Armor")
-            improvement = gameManager.HP + " HP \u2192 " + (gameManager.HP + 1) + " HP";
+            improvement = gameManager.HP + " HP > " + (gameManager.HP + 1) + " HP";
         else if (_upgrade.name == "Bounty")
-            improvement = gameManager.enemiesForScrew + " \u2192 " + (gameManager.enemiesForScrew - 1);
+            improvement = gameManager.enemiesForScrew + " > " + (gameManager.enemiesForScrew - 1);
         else if(_upgrade.name == "Faster Bullets")
-            improvement = player.bulletSpeed + "m/s \u2192 " + (player.bulletSpeed + 1) + "m/s";
+            improvement = player.bulletSpeed + "m/s > " + (player.bulletSpeed + 1) + "m/s";
         else if (_upgrade.name == "Move Speed")
-            improvement = player.moveSpeed + "m/s \u2192 " + (player.moveSpeed + 1) + "m/s";
+            improvement = player.moveSpeed + "m/s > " + (player.moveSpeed + 1) + "m/s";
         else if (_upgrade.name == "Reload Speed")
-            improvement = player.shootCooldown + "s \u2192 " + (player.shootCooldown * 0.8f) + "s";
+            improvement = player.shootCooldown + "s > " + (player.shootCooldown * 0.8f) + "s";
         else if(_upgrade.name == "Stronger Bullets")
-            improvement = Bullet.strength + " \u2192 " + (Bullet.strength + 1);
+            improvement = Bullet.strength + " > " + (Bullet.strength + 1);
         else if (_upgrade.name == "Vampire")
-            improvement = gameManager.enemiesForHP + " \u2192 " + (gameManager.enemiesForHP - 1);
+            improvement = gameManager.enemiesForHP + " > " + (gameManager.enemiesForHP - 1);
 
         return improvement;
     }

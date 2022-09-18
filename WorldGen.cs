@@ -15,7 +15,7 @@ public class WorldGen : MonoBehaviour
 
     public TextMeshProUGUI[] itemDescription = new TextMeshProUGUI[3];
 
-    public static readonly int[] areaDistance = { 100, 5000 };
+    public static readonly int[] areaDistance = { 1000, 2000 };
 
     private void Awake()
     {

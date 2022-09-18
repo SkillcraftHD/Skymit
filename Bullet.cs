@@ -36,12 +36,16 @@ public class Bullet : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            Bat bat = collision.GetComponent<Bat>();
+            GameObject enemy = collision.gameObject;
 
-            Instantiate(bat.dieEffect, transform.position, bat.dieEffect.transform.rotation);
-            Destroy(bat.gameObject);
+            if (enemy.TryGetComponent<Bird>(out var bird))
+                Instantiate(bird.dieEffect, transform.position, bird.dieEffect.transform.rotation);
+            else if (enemy.TryGetComponent<Bat>(out var bat))
+                Instantiate(bat.dieEffect, transform.position, bat.dieEffect.transform.rotation);
+
+            Destroy(enemy.gameObject);
         }
-        
+
         CheckUpgrades();
 
         strengthLeft--;

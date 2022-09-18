@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Bat : MonoBehaviour
+public class Bird : MonoBehaviour
 {
     float speed;
     int leftSide;
@@ -19,11 +19,14 @@ public class Bat : MonoBehaviour
     private void Start()
     {
         if (transform.position.x < 0f)
+        {
             leftSide = 1;
+            transform.eulerAngles = new Vector2(0f, 180f);
+        }
         else
             leftSide = -1;
 
-        speed = Random.Range(1f, 3.5f);
+        speed = Random.Range(5f, 7.5f);
     }
 
     private void Update()
@@ -34,6 +37,6 @@ public class Bat : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = new Vector2(leftSide * speed, 0f);
+        rb.velocity = new Vector2(leftSide * speed, -0.1f);
     }
 }
