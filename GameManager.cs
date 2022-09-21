@@ -1,9 +1,14 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject pauseMenu;
+    [HideInInspector]
+    public bool isPaused;
+
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI speedText;
     public TextMeshProUGUI screwsText;
@@ -54,6 +59,31 @@ public class GameManager : MonoBehaviour
 
         if (Application.isMobilePlatform)
             Application.targetFrameRate = 60;
+    }
+
+    private void OnApplicationFocus(bool focus)
+    {
+        if (!focus)
+            Pause(true);
+    }
+
+    public void Pause(bool _pause)
+    {
+        if (isPaused == _pause)
+            return;
+
+        isPaused = _pause;
+        pauseMenu.SetActive(isPaused);
+
+        if (isPaused)
+            Time.timeScale = 0f;
+        else
+            Time.timeScale = 1f;
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void Update()
