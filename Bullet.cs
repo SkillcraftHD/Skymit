@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
     Transform player;
 
     GameManager gameManager;
+    CameraManager cameraManager;
     WorldGen worldGen;
 
     public GameObject bulletDestroyEffect;
@@ -24,6 +25,7 @@ public class Bullet : MonoBehaviour
         player = FindObjectOfType<Player>().transform;
 
         gameManager = FindObjectOfType<GameManager>();
+        cameraManager = FindObjectOfType<CameraManager>();
         worldGen = FindObjectOfType<WorldGen>();
     }
     private void Start()
@@ -42,6 +44,8 @@ public class Bullet : MonoBehaviour
                 Instantiate(bird.dieEffect, transform.position, bird.dieEffect.transform.rotation);
             else if (enemy.TryGetComponent<Bat>(out var bat))
                 Instantiate(bat.dieEffect, transform.position, bat.dieEffect.transform.rotation);
+
+            cameraManager.CameraShake(5f, 0.2f);
 
             Destroy(enemy.gameObject);
         }

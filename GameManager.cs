@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
 
     public void Pause(bool _pause)
     {
-        if (isPaused == _pause)
+        if (isPaused == _pause || !isPlaying)
             return;
 
         isPaused = _pause;
@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitUntil(() => isPlaying);
 
-        shopScore += 1000;
+        shopScore += 500;
 
         yield return new WaitUntil(() => (int)score >= shopScore - 100);
         spawnLock = true;
