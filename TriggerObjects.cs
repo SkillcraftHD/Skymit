@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TriggerObjects : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class TriggerObjects : MonoBehaviour
     public Color hover;
 
     public GameObject settings;
+    public Image slider;
 
     string task;
 
@@ -43,17 +45,20 @@ public class TriggerObjects : MonoBehaviour
 
         if (task == "Settings")
             settings.SetActive(false);
+        else
+            slider.fillAmount = 0f;
     }
 
     IEnumerator WaitTillAction()
     {
         isTouching = true;
 
-        float time = 3f;
+        float time = 1.5f;
 
         while (time > 0f)
         {
             time -= Time.deltaTime;
+            slider.fillAmount = 1f - (2f / 3f * time);
             yield return null;
 
             if (!isTouching)
