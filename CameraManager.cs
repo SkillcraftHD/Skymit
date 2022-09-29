@@ -34,7 +34,11 @@ public class CameraManager : MonoBehaviour
             transform.position = new Vector3(transform.position.x + offset.x, player.position.y + 4f + offset.y, transform.position.z);
 
             _length -= Time.deltaTime;
+
             yield return null;
+
+            if (Time.timeScale == 0f)
+                break;
         }
 
         transform.position = new Vector3(origPosX, transform.position.y, transform.position.z);

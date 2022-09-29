@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject bird, bat;
+    public GameObject bird, bat, star;
 
     GameManager gameManager;
     Transform player;
@@ -34,6 +34,8 @@ public class EnemySpawner : MonoBehaviour
         }
         else if(gameManager.score < WorldGen.areaDistance[1])
             Instantiate(bat, new Vector2(Random.Range(-7.5f, 7.5f), player.position.y + 12.5f), Quaternion.identity);
+        else if (gameManager.score < WorldGen.areaDistance[2])
+            Instantiate(star, new Vector2(Random.Range(-7.5f, 7.5f), player.position.y + 12.5f), Quaternion.identity);
 
         StartCoroutine(SpawnEnemies());
     }

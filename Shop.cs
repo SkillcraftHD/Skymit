@@ -41,6 +41,7 @@ public class Shop : MonoBehaviour
                 selection[i].improvement.text = null;
                 selection[i].inStock.text = null;
                 selection[i].cost.text = null;
+                //selection[i].image.sprite = null;     // [Replace once actual sold out sprite exists]
                 selection[i].button.interactable = false;
                 return;
             }
