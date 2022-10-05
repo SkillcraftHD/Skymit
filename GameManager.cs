@@ -5,6 +5,8 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    static GameManager instance;
+
     public GameObject pauseMenu;
     [HideInInspector]
     public bool isPaused, fightingBoss;
@@ -39,8 +41,18 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public bool isPlaying;
 
+    public static GameManager Instance 
+    { 
+        get 
+        {
+            return instance;
+        } 
+    }
+
     private void Awake()
     {
+        instance = this;
+
         player = FindObjectOfType<Player>();
         playerRB = player.GetComponent<Rigidbody2D>();
     }
@@ -75,6 +87,8 @@ public class GameManager : MonoBehaviour
         isPaused = _pause;
         pauseMenu.SetActive(isPaused);
 
+        AudioManager.Instance.PauseMusic(_pause);
+
         if (isPaused)
             Time.timeScale = 0f;
         else
@@ -83,6 +97,7 @@ public class GameManager : MonoBehaviour
 
     public void Restart()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -124,6 +139,7 @@ public class GameManager : MonoBehaviour
         shopScore += 500;
 
         yield return new WaitUntil(() => (int)score >= shopScore - 100);
+        yield return new WaitUntil(() => !fightingBoss);
         spawnLock = true;
         yield return new WaitUntil(() => (int)score >= shopScore);
         isInShop = true;

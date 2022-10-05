@@ -4,8 +4,6 @@ public class Bullet : MonoBehaviour
 {
     Rigidbody2D rb;
     Transform player;
-
-    GameManager gameManager;
     CameraManager cameraManager;
     WorldGen worldGen;
 
@@ -24,7 +22,6 @@ public class Bullet : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         player = FindObjectOfType<Player>().transform;
 
-        gameManager = FindObjectOfType<GameManager>();
         cameraManager = FindObjectOfType<CameraManager>();
         worldGen = FindObjectOfType<WorldGen>();
     }
@@ -65,15 +62,15 @@ public class Bullet : MonoBehaviour
     }
     void CheckUpgrades()
     {
-        if(gameManager.bounty && --gameManager.enemiesLeftForScrew <= 0)
+        if(GameManager.Instance.bounty && --GameManager.Instance.enemiesLeftForScrew <= 0)
         {
-            gameManager.enemiesLeftForScrew = gameManager.enemiesForScrew;
+            GameManager.Instance.enemiesLeftForScrew = GameManager.Instance.enemiesForScrew;
             Instantiate(worldGen.screw, transform.position, Quaternion.identity);
         }
-        if(gameManager.vampire && --gameManager.enemiesLeftForHP <= 0)
+        if(GameManager.Instance.vampire && --GameManager.Instance.enemiesLeftForHP <= 0)
         {
-            gameManager.enemiesLeftForHP = gameManager.enemiesForHP;
-            gameManager.HP++;
+            GameManager.Instance.enemiesLeftForHP = GameManager.Instance.enemiesForHP;
+            GameManager.Instance.HP++;
         }
     }
 
