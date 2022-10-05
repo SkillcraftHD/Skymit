@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject pauseMenu;
     [HideInInspector]
-    public bool isPaused;
+    public bool isPaused, fightingBoss;
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI speedText;
@@ -119,6 +119,7 @@ public class GameManager : MonoBehaviour
     IEnumerator WaitForShop()
     {
         yield return new WaitUntil(() => isPlaying);
+        yield return new WaitUntil(() => !fightingBoss);
 
         shopScore += 500;
 

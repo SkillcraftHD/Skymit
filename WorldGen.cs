@@ -4,22 +4,25 @@ using TMPro;
 
 public class WorldGen : MonoBehaviour
 {
-    [Header("Other")]
-    public GameObject cloud;
-    public GameObject cloud_night;
+    public GameObject cloud, cloud_night, background_star;
     public GameObject screw;
+
+    public GameObject speedEffect, blackHole, godEffect;
+    public GameObject boss, bossHP;
 
     public Camera cam;
     GameManager gameManager;
+    AudioManager audioManager;
     Rigidbody2D player;
 
     public TextMeshProUGUI[] itemDescription = new TextMeshProUGUI[3];
 
-    public static readonly int[] areaDistance = { 1000, 2000, 2500 };
+    public static readonly int[] areaDistance = { 10, 20, 100 };
 
     private void Awake()
     {
         gameManager = FindObjectOfType<GameManager>();
+        audioManager = FindObjectOfType<AudioManager>();
         player = FindObjectOfType<Player>().GetComponent<Rigidbody2D>();
     }
 
@@ -35,6 +38,26 @@ public class WorldGen : MonoBehaviour
 
         StartCoroutine(SpawnClouds());
         StartCoroutine(SpawnScrews());
+
+        yield return new WaitUntil(() => gameManager.score > areaDistance[1]);
+
+        speedEffect.SetActive(true);
+        blackHole.SetActive(true);
+
+        yield return new WaitUntil(() => gameManager.score > areaDistance[2]);
+
+        speedEffect.SetActive(false);
+        blackHole.SetActive(false);
+
+        godEffect.SetActive(true);
+        bossHP.SetActive(true);
+
+        GameObject _boss = Instantiate(boss);
+        _boss.transform.parent = cam.transform;
+        _boss.transform.localPosition = new Vector3(0f, 5f, 10f);
+
+        audioManager.PlayMusic(0);
+        gameManager.fightingBoss = true;
     }
 
     IEnumerator SpawnClouds()

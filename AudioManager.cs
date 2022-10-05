@@ -12,4 +12,9 @@ public class AudioManager : MonoBehaviour
     {
         Sounds.PlayOneShot(soundClips[_index], _volume);
     }
+    public void PlayMusic(int _index)
+    {
+        Music.clip = musicClips[_index];
+        Music.Play();
+    }
 }
