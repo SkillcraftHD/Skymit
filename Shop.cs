@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class Shop : MonoBehaviour
 {
@@ -19,11 +19,14 @@ public class Shop : MonoBehaviour
     int[] upgradeIndex = new int[3];
 
     public Sprite player_Vampire;
+    public GameObject upgradeEffect;
+    Transform cam;
 
     private void Awake()
     {
         gameManager = FindObjectOfType<GameManager>();
         player = FindObjectOfType<Player>();
+        cam = FindObjectOfType<Camera>().transform;
     }
 
     public void EnterShop()
@@ -72,17 +75,15 @@ public class Shop : MonoBehaviour
     {
         string improvement = "";
 
-        if (_upgrade.name == "Better Armor")
-            improvement = gameManager.HP + " HP > " + (gameManager.HP + 1) + " HP";
-        else if (_upgrade.name == "Bounty")
+        if (_upgrade.name == "Bounty")
             improvement = gameManager.enemiesForScrew + " > " + (gameManager.enemiesForScrew - 1);
-        else if(_upgrade.name == "Faster Bullets")
+        else if (_upgrade.name == "Faster Bullets")
             improvement = player.bulletSpeed + "m/s > " + (player.bulletSpeed + 1) + "m/s";
         else if (_upgrade.name == "Move Speed")
             improvement = player.moveSpeed + "m/s > " + (player.moveSpeed + 1) + "m/s";
         else if (_upgrade.name == "Reload Speed")
             improvement = player.shootCooldown + "s > " + (player.shootCooldown * 0.8f) + "s";
-        else if(_upgrade.name == "Stronger Bullets")
+        else if (_upgrade.name == "Stronger Bullets")
             improvement = Bullet.strength + " > " + (Bullet.strength + 1);
         else if (_upgrade.name == "Vampire")
             improvement = gameManager.enemiesForHP + " > " + (gameManager.enemiesForHP - 1);
@@ -154,7 +155,7 @@ public class Shop : MonoBehaviour
 
     void ApplyUpgrade(Upgrade _upgrade, int _num)
     {
-        switch(_upgrade.name)
+        switch (_upgrade.name)
         {
             case "Move Speed":
                 player.moveSpeed += 1f;
@@ -168,9 +169,6 @@ public class Shop : MonoBehaviour
                 break;
             case "Reload Speed":
                 player.shootCooldown *= 0.8f;
-                break;
-            case "Better Armor":
-                gameManager.HP++;
                 break;
             case "Spike Bullets":
                 Bullet.strength++;
@@ -190,12 +188,10 @@ public class Shop : MonoBehaviour
                 break;
         }
 
-        if (_upgrade.name == "Better Armor")
-        {
-            gameObject.SetActive(false);
-        }
-        else
-            AddUpgradeBought(_upgrade, _num);
+        AddUpgradeBought(_upgrade, _num);
+
+        GameObject _effect = Instantiate(upgradeEffect);
+        _effect.transform.SetParent(cam.transform, false);
     }
 
     void AddUpgradeBought(Upgrade _upgrade, int _num)

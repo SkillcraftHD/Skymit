@@ -53,13 +53,15 @@ public class Player : MonoBehaviour
             audioManager.PlaySound(1);
             Destroy(collision.gameObject);
         }
+        else if (collision.CompareTag("Enemy"))
+        {
+            Destroy(collision.gameObject);
+            GetHit();
+        }
     }
     void GetHit()
     {
-        gameManager.HP--;
-
-        if (gameManager.HP <= 0)
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void Move(int _direction)

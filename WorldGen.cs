@@ -36,6 +36,8 @@ public class WorldGen : MonoBehaviour
     {
         yield return new WaitUntil(() => gameManager.isPlaying);
 
+        AudioManager.Instance.PlayMusic(0);
+
         StartCoroutine(SpawnClouds());
         StartCoroutine(SpawnScrews());
 
@@ -56,7 +58,7 @@ public class WorldGen : MonoBehaviour
         _boss.transform.parent = cam.transform;
         _boss.transform.localPosition = new Vector3(0f, 5f, 10f);
 
-        audioManager.PlayMusic(0);
+        audioManager.PlayMusic(1);
         gameManager.fightingBoss = true;
     }
 
@@ -93,6 +95,7 @@ public class WorldGen : MonoBehaviour
 
         yield return new WaitUntil(() => !gameManager.spawnLock);
         yield return new WaitUntil(() => !gameManager.isInShop);
+        yield return new WaitUntil(() => !gameManager.fightingBoss);
         Instantiate(screw, player.position + Vector2.up * 15f, Quaternion.identity);
 
         StartCoroutine(SpawnScrews());

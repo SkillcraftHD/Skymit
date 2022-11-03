@@ -7,6 +7,8 @@ public class Boss : MonoBehaviour
     WorldGen worldGen;
 
     Slider HPSlider;
+    public GameObject laser;
+
     public int HP = 100;
     int currentHP;
 
@@ -21,6 +23,8 @@ public class Boss : MonoBehaviour
         HPSlider.maxValue = HP;
         HPSlider.value = HP;
         currentHP = HP;
+
+        StartCoroutine(Attack());
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -36,5 +40,19 @@ public class Boss : MonoBehaviour
             Destroy(gameObject);
 
         HPSlider.value = currentHP;
+    }
+
+    IEnumerator Attack()
+    {
+        yield return new WaitForSeconds(1f);
+
+        Attack1();
+
+        StartCoroutine(Attack());
+    }
+
+    void Attack1()
+    {
+        Instantiate(laser, transform.parent);
     }
 }
